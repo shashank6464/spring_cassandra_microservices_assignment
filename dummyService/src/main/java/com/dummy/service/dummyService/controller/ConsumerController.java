@@ -23,8 +23,7 @@ public class ConsumerController {
     EmployeeConsumer employeeConsumer;
 
 
-
-
+    //get all users
     @GetMapping("/get-users")
     List<User> getUsers(){
         System.out.println(restConsumer.getClass().getSimpleName());
@@ -32,11 +31,13 @@ public class ConsumerController {
         return restConsumer.getUsers();
     }
 
+    //add new user
     @PostMapping("/add-user")
     public String signup(@RequestBody User user){
         return restConsumer.signup(user);
     }
 
+    //login
     @PostMapping("/login")
     String login(@RequestBody Map<String, Object> map){
 
@@ -60,41 +61,39 @@ public class ConsumerController {
         return response.toString();
 
     }
+
+    //get token by id
     @GetMapping("/get-token/{id}")
     String createToken(@PathVariable("id") int id){
         return authenticationConsumer.createToken(id);
     }
 
-    //@GetMapping("/get-userId-from-token/{token}")
-    public String getUserIdFromToken(String token){
-        return authenticationConsumer.getUserIdFromToken(token);
-    }
-
-
-
+    //add employee
     @PostMapping("/employee/add-employee")
     ResponseEntity<Employee> addEmployee(@RequestBody Employee employee){
         return employeeConsumer.addEmployee(employee);
     }
 
 
+    //get all employee
     @GetMapping("/employee/get-employees")
     List<Employee> getAllEmployees(){
         return employeeConsumer.getAllEmployees();
     }
 
 
+    //edit employee
     @PutMapping("/employee/edit-employee")
     ResponseEntity<Employee> editEmployee(@RequestBody Map<String, Object> requestBody){
         return employeeConsumer.editEmployee(requestBody);
     }
 
 
+    //delete employee
     @DeleteMapping("/employee/delete-employee/{id}")
     String deleteEmployeeById(@PathVariable("id") int id){
         return employeeConsumer.deleteEmployeeById(id);
     }
-
 
 
 

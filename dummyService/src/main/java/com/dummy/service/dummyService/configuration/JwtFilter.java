@@ -21,12 +21,9 @@ public class JwtFilter extends GenericFilterBean {
 
     private AuthenticationConsumer tokenConsumerService;
 
-    private ConsumerController controller;
-
-    public JwtFilter(AuthenticationConsumer tokenConsumerService,
-                     ConsumerController controller){
+    public JwtFilter(AuthenticationConsumer tokenConsumerService
+    ){
         this.tokenConsumerService = tokenConsumerService;
-        this.controller = controller;
     }
 
 
@@ -49,14 +46,14 @@ public class JwtFilter extends GenericFilterBean {
             filterChain.doFilter(req,res);
         }
         else{
-            String userId = controller.getUserIdFromToken(token);
-            System.out.println(userId+"**************************************************");
+            String userId = tokenConsumerService.getUserIdFromToken(token);
+            System.out.println(userId+"************************************");
             httpServletRequest.setAttribute("userId",userId);
             filterChain.doFilter(req,res);
         }
     }
 
-    //for allowing without jwt token
+    //allow apis without jwt token
     public boolean allowRequestWithoutToken(HttpServletRequest httpServletRequest){
         System.out.println(httpServletRequest.getRequestURI());
         if(!httpServletRequest.getRequestURI().contains("/employee"))
@@ -64,6 +61,4 @@ public class JwtFilter extends GenericFilterBean {
 
         return false;
     }
-
-
 }
