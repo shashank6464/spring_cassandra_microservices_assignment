@@ -1,7 +1,6 @@
 package com.signup.service.signupService.service;
 
 import com.signup.service.signupService.model.User;
-import com.signup.service.signupService.proxyServices.AuthenticationConsumer;
 import com.signup.service.signupService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -16,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    public String signupService(SecurityProperties.User user){
+    public String signupService(User user){
 
         //System.out.println(authConsumer.welcome());
         User savedUser = userRepository.save(user);

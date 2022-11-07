@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-
 @Service
 public class TokenService {
-    public static final String token_secret = "quei083nr8fjfh345q98m4aioweuf1";
 
-    //token creation
+    //random token secret
+    public static final String token_secret = "abc123";
+
     public String createToken(int userId){
         try {
             // Random generating String using with Token Secret.
@@ -28,6 +28,8 @@ public class TokenService {
                     withClaim("userId", Integer.toString(userId)).
                     withClaim("createdAt", new Date()).
                     sign(algorithm);
+            System.out.println(getUserIdFromToken(token));
+            System.out.println(token);
             return token;
 
         } catch (UnsupportedEncodingException | JWTCreationException e){
@@ -38,6 +40,8 @@ public class TokenService {
 
     // Decoding the created token
     public String getUserIdFromToken(String token){
+        System.out.println("///////////////this token//////////////////"+token);
+        //token = token.substring(4);
         try {
             Algorithm algorithm = Algorithm.HMAC256(token_secret);
             JWTVerifier jwtVerifier = JWT.require(algorithm).build();
@@ -52,8 +56,10 @@ public class TokenService {
         return null;
     }
 
+    //token validation
     public boolean isTokenValid(String token){
         String userId = this.getUserIdFromToken(token);
         return  userId != null;
     }
+
 }

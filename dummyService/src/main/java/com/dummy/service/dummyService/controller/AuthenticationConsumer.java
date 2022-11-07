@@ -10,4 +10,8 @@ public interface AuthenticationConsumer {
     @GetMapping("/get-token/{id}")
     String createToken(@PathVariable("id") int id);
 
+    //get user from token
+    @GetMapping("/get-userId-from-token/{token}")
+    String getUserIdFromToken(@PathVariable("token") String token);
+
 }

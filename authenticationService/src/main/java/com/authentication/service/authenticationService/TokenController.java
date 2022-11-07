@@ -13,17 +13,21 @@ public class TokenController {
     @Autowired
     private TokenService tokenService;
 
-
     @GetMapping("/welcome")
     public String welcome(){
         return "welcome";
     }
 
 
-    //get token by userId
+    //get token by id
     @GetMapping("/get-token/{id}")
     public String createToken(@PathVariable("id") int userId){
         return tokenService.createToken(userId);
     }
 
+    //get user id from token
+    @GetMapping("/get-userId-from-token/{token}")
+    public String getUserIdFromToken(@PathVariable("token") String token){
+        return tokenService.getUserIdFromToken(token);
+    }
 }

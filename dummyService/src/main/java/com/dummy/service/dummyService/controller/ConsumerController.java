@@ -1,7 +1,9 @@
 package com.dummy.service.dummyService.controller;
 
+import com.dummy.service.dummyService.model.Employee;
 import com.dummy.service.dummyService.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,12 @@ public class ConsumerController {
 
     @Autowired
     AuthenticationConsumer authenticationConsumer;
+
+    @Autowired
+    EmployeeConsumer employeeConsumer;
+
+
+
 
     @GetMapping("/get-users")
     List<User> getUsers(){
@@ -56,5 +64,38 @@ public class ConsumerController {
     String createToken(@PathVariable("id") int id){
         return authenticationConsumer.createToken(id);
     }
+
+    //@GetMapping("/get-userId-from-token/{token}")
+    public String getUserIdFromToken(String token){
+        return authenticationConsumer.getUserIdFromToken(token);
+    }
+
+
+
+    @PostMapping("/employee/add-employee")
+    ResponseEntity<Employee> addEmployee(@RequestBody Employee employee){
+        return employeeConsumer.addEmployee(employee);
+    }
+
+
+    @GetMapping("/employee/get-employees")
+    List<Employee> getAllEmployees(){
+        return employeeConsumer.getAllEmployees();
+    }
+
+
+    @PutMapping("/employee/edit-employee")
+    ResponseEntity<Employee> editEmployee(@RequestBody Map<String, Object> requestBody){
+        return employeeConsumer.editEmployee(requestBody);
+    }
+
+
+    @DeleteMapping("/employee/delete-employee/{id}")
+    String deleteEmployeeById(@PathVariable("id") int id){
+        return employeeConsumer.deleteEmployeeById(id);
+    }
+
+
+
 
 }
